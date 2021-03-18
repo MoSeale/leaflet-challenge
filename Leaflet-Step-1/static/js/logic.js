@@ -53,7 +53,7 @@ function createFeatures(earthquakeData) {
     function markerStyle(feature){
 
         var marker_color = chooseColor(feature.geometry.coordinates[2]);
-        var marker_size = feature.properties.mag * 3
+        var marker_size = feature.properties.mag * 5.5
 
         return{
 
@@ -81,6 +81,8 @@ function createFeatures(earthquakeData) {
         pointToLayer: function(feature, latlng) {
             return L.circleMarker(latlng);
         },
+
+        style: markerStyle
 
         
 
