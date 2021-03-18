@@ -12,25 +12,31 @@ d3.json(queryUrl, function(data) {
 
 // Function that will determine the color of a marker based on the magnitude of the earthquake by  size and and depth of the earthquake
 function chooseColor(depth) {
-    switch (depth) {
-    case depth<10:
-      return "green";
-    case depth<30:
-      return "lightgreen";
-    case depth<50:
-      return "darkyellow";
-    case depth<70:
-      return "orange";
-    case depth<90:
-      return "darkorange";
-    default:
-      return "red";
-    }
+    if(depth > 90)
+        {return "red"}  
+    else if (depth>70)
+        {return "dark orange"}   
+    else if (depth>50)
+        {return "orange"}
+
+    else if (depth>30)
+        {return "yellow"}
+    else if (depth>10)
+        {return "lightgreen"}
+    else if (depth<10)
+        {return "green"}
+    else
+        {return "black"}
+    
   }
 
 
-
-
+//   console.log(chooseColor(91))
+//   console.log(chooseColor(75))
+//   console.log(chooseColor(50.5))
+//   console.log(chooseColor(32.5))
+//   console.log(chooseColor(12.5))
+//   console.log(chooseColor(2.5))
 
  ///Create earthquake layer
  
@@ -52,9 +58,12 @@ function createFeatures(earthquakeData) {
     ///Function to define marker style
     function markerStyle(feature){
 
-        var marker_color = chooseColor(feature.geometry.coordinates[2]);
-        var marker_size = feature.properties.mag * 5.5
+        var marker_color = chooseColor(feature.geometry.coordinates[2])
 
+
+        var marker_size = feature.properties.mag * 3.5
+        //console.log(feature.geometry.coordinates[2])
+        //console.log(marker_color)
         return{
 
             stroke: false,
@@ -66,10 +75,6 @@ function createFeatures(earthquakeData) {
 
 
     }
-
-
-
-    
 
 
 
