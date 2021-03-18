@@ -10,17 +10,6 @@ d3.json(queryUrl, function(data) {
   });
 
 
-function createFeatures(earthquakeData) {
-    console.log(earthquakeData);
-// Define a function we want to run once for each feature in the features array
-// Give each feature a popup describing the place and time of the earthquake
-function onEachFeature(feature, layer) {
-    layer.bindPopup("<h3>" + feature.properties.place +
-    "</h3><hr><p>" + new Date(feature.properties.time) + "</p>"
-    + "</h3><hr><p>Magnitude: " + feature.properties.mag + "</p>"
-    + "</h3><hr><p>Depth: " + feature.geometry.coordinates[2] + "</p>");
-}
-
 // Function that will determine the color of a marker based on the magnitude of the earthquake by  size and and depth of the earthquake
 function chooseColor(depth) {
     switch (depth) {
@@ -39,11 +28,30 @@ function chooseColor(depth) {
     }
   }
 
+ ///Create earthquake layer
+ 
+ 
+function createFeatures(earthquakeData) {
+    console.log(earthquakeData);
+// Define a function we want to run once for each feature in the features array
+
+
+// Give each feature a popup describing the place, time, magnitude and co-ordinates of the earthquake
+function onEachFeature(feature, layer) {
+    layer.bindPopup("<h3>" + feature.properties.place +
+    "</h3><hr><p>" + new Date(feature.properties.time) + "</p>"
+    + "</h3><hr><p>Magnitude: " + feature.properties.mag + "</p>"
+    + "</h3><hr><p>Depth: " + feature.geometry.coordinates[2] + "</p>");
+}
+
 // Create a GeoJSON layer containing the features array on the earthquakeData object
 // Run the onEachFeature function once for each piece of data in the array
 var earthquakes = L.geoJSON(earthquakeData, {
-    onEachFeature: onEachFeature
+    onEachFeature: onEachFeature,
 
+    pointToLayer: function(feature, latlng) {
+        return L.circleMarker(latlng);
+    },
 
     
 
